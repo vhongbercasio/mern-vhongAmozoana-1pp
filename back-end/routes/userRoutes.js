@@ -9,7 +9,7 @@ import { generateToken } from '../utils.js'
 const userRouter = express.Router();
 
 
-userRouter.post('/signin', expressAsyncHandler(async (req, res,) => {
+userRouter.post('/sign-in', expressAsyncHandler(async (req, res,) => {
     const user = await User.findOne({ email: req.body.email })
     if (user) {
         if (bcrypt.compareSync(req.body.password, user.password)) {
@@ -25,7 +25,7 @@ userRouter.post('/signin', expressAsyncHandler(async (req, res,) => {
             return
         }
     } else {
-        res.status(401).send({ message: 'lnvalid email or password' })
+        res.status(401).send({ message: 'lnvalisssd email or password' })
     }
 }))
 

@@ -1,15 +1,25 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { Store } from '../Store'
 import { Helmet } from 'react-helmet-async'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
-import { useLocation, Link } from 'react-router-dom'
+import { useLocation, Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 
-const SigninScreen = () => {
+// import this to show the  erorr as the dyanamic from back end userRoutes 
+import { getError } from '../utils'
 
+
+// customize loadign if the applicataion or is log in 
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
+const SigninScreen = () => {
+    // define the navigation
+    const navigate = useNavigate();
     const { search } = useLocation();
     //  instanstaite the shipping url in cartScreen 
     const redirectInUrl = new URLSearchParams(search).get('redirect');
@@ -21,25 +31,37 @@ const SigninScreen = () => {
 
     const { state, dispatch: ctxDispatch } = useContext(Store);
 
+    const { userInfo } = state
+
     const submitHandler = async (e) => {
         e.preventDefault()
-
         try {
-            const { data } = await axios.post(`/api/users/signin`, {
+            const { data } = await axios.post(`/api/users/sign-in`, {
                 email,
                 password
             })
+            console.log(data)
+            ctxDispatch({ type: 'USER_SIGNIN', payload: data });
+            localStorage.setItem('userInfo', JSON.stringify(data));
+            navigate(redirect || '/');
 
-            ctxDispatch({ type: 'USER_SIGNIN', data: data })
         } catch (error) {
-
+            toast.error(getError(error));
         }
     }
+
+    // define if the user is existing and already log in and never back again in sign navigation
+    useEffect(() => {
+        if (userInfo) {
+            navigate(redirect)
+        }
+
+    }, [navigate, redirect, userInfo])
 
     return (
         <Container className="small-container">
             <Helmet>
-                <title>Sgin in </title>
+                <title>Sign  in </title>
             </Helmet>
             <h1 className="my-3">Sign In</h1>
             <Form onSubmit={submitHandler}>

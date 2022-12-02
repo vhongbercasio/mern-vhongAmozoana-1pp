@@ -33,6 +33,22 @@ app.use('/api/users', userRouter)
 
 
 
+
+// Define the error express  handler  function
+// this is middleware run if have error in routes ex: userRoute this will be execute 
+// this execute if the user log in is invalid
+app.use((error, req, res, next) => {
+    res.status(500).send({ message: err.message })
+})
+
+// define the port express,
+const port = process.env.PORT || 5000;
+app.listen(port, () => {
+    console.log(`server at http://localhost:${port}`);
+
+
+});
+
 // API request [SECTION] retirv produc as defaul 
 // app.get('/api/products', (req, res) => {
 //     res.send(data.products)
@@ -67,16 +83,3 @@ app.use('/api/users', userRouter)
 
 
 
-// Define the error express  hanlder function
-// this is middleware run if have error in routes ex: userRoute this will be execute 
-app.use((error, req, res, next) => {
-    res.status(500).send({ message: err.message })
-})
-
-// define the port express,
-const port = process.env.PORT || 5000;
-app.listen(port, () => {
-    console.log(`server at http://localhost:${port}`);
-
-
-});

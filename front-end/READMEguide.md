@@ -152,6 +152,7 @@ install jssonwetoken to authentication the user to generate a token
 
 
 COMPLETE SIGNIN SCREEN
+further npm i react-toastify for show ther error
     1. handle submit action 
     2.save token in store and local storage
     3.show user name in header 
