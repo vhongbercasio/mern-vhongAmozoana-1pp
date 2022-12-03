@@ -10,7 +10,9 @@ const initialState = {
         JSON.parse(localStorage.getItem('userInfo')) : null,
 
     cart: {
-        // store in local storage in web and get of they exist 
+        // define the shippingAdress of oder in caritems in list
+        shippingAdress: localStorage.getItem('shippingAdress') ? JSON.parse(localStorage.getItem('shippingAdress')) : {},
+        // store in local storage in web and get of they exist cartdItems 
         cartItems: localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : []
     }
 
@@ -50,8 +52,21 @@ const reducer = (state, action) => {
         case 'USER_SIGNOUT': {
             return {
                 ...state, userInfo: null,
+                //  in  order to signout , about the cart items and userInfo will be remote in local storage or reset
+                cart: {
+                    cartItems: [],
+                    shippingAdress: {}
+                }
             }
         }
+
+        case 'SAVE_SHIPPING_ADDRESS':
+            return {
+                ...state, cart: {
+                    ...state.cart, shippingAdress: action.payload
+                }
+            }
+
         default:
             return state
     }

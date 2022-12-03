@@ -46,7 +46,8 @@ const CartScreen = () => {
             <Helmet>
                 <title>Shopping Cart</title>
             </Helmet>
-            <h1>Shopping Cart</h1>
+
+            <h1 className="my-3">Shopping Cart </h1>
             <Row>
                 <Col md={8}>
                     {cartItems.length === 0 ? (
@@ -104,7 +105,7 @@ const CartScreen = () => {
                                     <div className="d-grid">
                                         <Button
                                             type="button"
-                                            varia="pimary"
+                                            variant="primary"
                                             onClick={handlecheckOut}
                                             disabled={cartItems.length === 0}
                                         >

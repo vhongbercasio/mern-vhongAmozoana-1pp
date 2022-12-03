@@ -6,6 +6,7 @@ import HomeScreen from './screen/HomeScreen '
 import ProductScreen from './screen/ProductScreen'
 import CartScreen from './screen/CartScreen'
 import SigninScreen from './screen/SigninScreen'
+import ShiipingAdresScreen from './screen/ShiipingAdresScreen'
 
 // impoert the some react-bootstrap
 import Navbar from 'react-bootstrap/Navbar';
@@ -26,8 +27,10 @@ function App() {
   console.log(userInfo)
 
   const signoutHandler = () => {
+    // reset all data from cartitem and userinfo
     ctxDispatch({ type: 'USER_SIGNOUT' });
-    localStorage.removeItem('userInfo')
+    localStorage.removeItem('userInfo');
+    localStorage.removeItem('shippingAdress');
 
   }
 
@@ -75,13 +78,18 @@ function App() {
         <main>
           <Container className="mt-3">
             <Routes>
-              {/* anchor tag in params components ProductScreen */}
+              {/* anchor tag in params slug components ProductScreen and route */}
               <Route path="/product/:slug" element={<ProductScreen />} />
-              {/* Route for cartScreen */}
+
+              {/* list of products homeScreen components and route  */}
               <Route path="/cart" element={<CartScreen />} />
-              {/* list of products homeScreen components */}
-              {/* Sign in components */}
+
+              {/* Sign in components and routes  */}
               <Route path="/signin" element={<SigninScreen />} />
+
+              {/* ShippingaddressScreen components and route*/}
+              <Route path="/shipping" element={< ShiipingAdresScreen />} />
+
               <Route path="/" element={<HomeScreen />} />
             </Routes>
           </Container>
