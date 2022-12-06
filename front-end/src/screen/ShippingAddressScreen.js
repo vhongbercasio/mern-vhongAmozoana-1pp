@@ -11,9 +11,9 @@ import CheckoutSteps from '../components/CheckoutSteps'
 
 
 
-const ShiipingAdresScreen = () => {
+const ShippingAddressScreen = () => {
     // define the useNavigate to back the signin nav or link or router 
-    const navigation = useNavigate()
+    const navigate = useNavigate()
     const { state, dispatch: ctxDispatch } = useContext(Store);
     // define the prev state in every state in shipping Adress  list for user
     const {
@@ -33,9 +33,9 @@ const ShiipingAdresScreen = () => {
     // define to remove then data if ever the user is log out or the user is did not exist  must be remove it to secure tbe data 
     useEffect(() => {
         if (!userInfo) {
-            navigation('/signin?redirect=/shipping  ');
+            navigate('/signin?redirect=/shipping  ');
         }
-    }, [userInfo, navigation])
+    }, [userInfo, navigate])
 
     const submitHandler = (e) => {
         e.preventDefault()
@@ -58,6 +58,8 @@ const ShiipingAdresScreen = () => {
             country
         })
         );
+        navigate('/payment')
+
     }
 
 
@@ -82,7 +84,7 @@ const ShiipingAdresScreen = () => {
                     </Form.Group>
 
                     {/* full name Adress */}
-                    <Form.Group className="mb-3" controlId="adress">
+                    <Form.Group className="mb-3" controlId="address">
                         <Form.Label>Adress </Form.Label>
                         <Form.Control value={address}
                             onChange={(e) => setAdress(e.target.value)} >
@@ -125,4 +127,4 @@ const ShiipingAdresScreen = () => {
     )
 }
 
-export default ShiipingAdresScreen
+export default ShippingAddressScreen

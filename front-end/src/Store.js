@@ -10,6 +10,8 @@ const initialState = {
         JSON.parse(localStorage.getItem('userInfo')) : null,
 
     cart: {
+        // define the Payment method since we are use string
+        paymentMethod: localStorage.getItem('paymentMethod') ? localStorage.getItem('paymentMethod') : '',
         // define the shippingAdress of oder in caritems in list
         shippingAdress: localStorage.getItem('shippingAdress') ? JSON.parse(localStorage.getItem('shippingAdress')) : {},
         // store in local storage in web and get of they exist cartdItems 
@@ -55,7 +57,9 @@ const reducer = (state, action) => {
                 //  in  order to signout , about the cart items and userInfo will be remote in local storage or reset
                 cart: {
                     cartItems: [],
-                    shippingAdress: {}
+                    shippingAdress: {},
+                    paymentMethod: " ",
+
                 }
             }
         }
@@ -66,6 +70,14 @@ const reducer = (state, action) => {
                     ...state.cart, shippingAdress: action.payload
                 }
             }
+
+        case 'SAVE_PAYMENT_METHOD':
+            return {
+                ...state, cart: {
+                    ...state.cart, paymentMethod: action.payload
+                }
+            }
+
 
         default:
             return state

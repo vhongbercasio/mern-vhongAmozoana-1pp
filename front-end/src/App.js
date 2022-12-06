@@ -6,9 +6,12 @@ import HomeScreen from './screen/HomeScreen '
 import ProductScreen from './screen/ProductScreen'
 import CartScreen from './screen/CartScreen'
 import SigninScreen from './screen/SigninScreen'
-import ShiipingAdresScreen from './screen/ShiipingAdresScreen'
+import ShippingAddressScreen from './screen/ShippingAddressScreen'
+import SignUpSreen from './screen/SignUpSreen';
+import PayMethodScreen from './screen/PayMethodScreen';
+import PlaceOrderScreen from "./screen/PlaceOrderScreen";
 
-// impoert the some react-bootstrap
+// import the some react-bootstrap
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Badge from 'react-bootstrap/Badge';
@@ -31,6 +34,7 @@ function App() {
     ctxDispatch({ type: 'USER_SIGNOUT' });
     localStorage.removeItem('userInfo');
     localStorage.removeItem('shippingAdress');
+    localStorage.removeItem('paymentMethod')
 
   }
 
@@ -87,8 +91,17 @@ function App() {
               {/* Sign in components and routes  */}
               <Route path="/signin" element={<SigninScreen />} />
 
+              {/* Sign up components and routes  */}
+              <Route path="/sign-up" element={<SignUpSreen />} />
+
               {/* ShippingaddressScreen components and route*/}
-              <Route path="/shipping" element={< ShiipingAdresScreen />} />
+              <Route path="/shipping" element={< ShippingAddressScreen />} />
+
+              {/* ShippingaddressScreen components and route*/}
+              <Route path="/payment" element={<PayMethodScreen />} />
+
+              {/* PlaceOrderScreen components and route*/}
+              <Route path="/placeorder-screen" element={<PlaceOrderScreen />} />
 
               <Route path="/" element={<HomeScreen />} />
             </Routes>

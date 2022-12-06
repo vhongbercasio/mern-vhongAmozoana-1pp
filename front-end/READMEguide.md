@@ -162,3 +162,18 @@ further npm i react-toastify for show ther error
   1.create form input
   2.handle save shiiping addres
   3.ad checkout wizard bar   
+
+CREATE SIGN UP SCREEN / we create if the user is not existing in the data 
+1.crete input forms
+2.handle submit
+3.create backend ApI of the user to sign upp
+
+
+IMPLEMENT SELECT PAYMENT METHOFD SCREEN 
+1.create input handle
+2.handle submit
+
+CREEAT PLACE ORDER Screen
+1.show cart items, paymeent address.
+2.handle place order action 
+3. create orsder create api 

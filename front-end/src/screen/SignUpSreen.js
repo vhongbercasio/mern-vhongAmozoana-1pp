@@ -17,7 +17,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-const SigninScreen = () => {
+const SignUpSreen = () => {
     // define the navigation
     const navigate = useNavigate();
     const { search } = useLocation();
@@ -25,9 +25,11 @@ const SigninScreen = () => {
     const redirectInUrl = new URLSearchParams(search).get('redirect');
     const redirect = redirectInUrl ? redirectInUrl : '/';
 
-    //define the email and password
+    //define the email and password along the name , password ang confirm password
     const [email, setEmail] = useState('')
+    const [name, setName] = useState('')
     const [password, setPassword] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('')
 
     const { state, dispatch: ctxDispatch } = useContext(Store);
 
@@ -35,8 +37,13 @@ const SigninScreen = () => {
 
     const submitHandler = async (e) => {
         e.preventDefault()
+        if (password !== confirmPassword) {
+            toast.error('Password do not match');
+            return;
+        }
         try {
-            const { data } = await axios.post(`/api/users/sign-in`, {
+            const { data } = await axios.post(`/api/users/sign-up`, {
+                name,
                 email,
                 password
             })
@@ -47,6 +54,7 @@ const SigninScreen = () => {
 
         } catch (error) {
             toast.error(getError(error));
+            console.log("asdsad")
         }
     }
 
@@ -61,31 +69,45 @@ const SigninScreen = () => {
     return (
         <Container className="small-container">
             <Helmet>
-                <title>Sign  in </title>
+                <title>Sign Up</title>
             </Helmet>
-            <h1 className="my-3">Sign In</h1>
+            <h1 className="my-3">Sign Up</h1>
             <Form onSubmit={submitHandler}>
 
+                {/* Email form SECTION  */}
+                <Form.Group className="mb-3" controlId="name">
+                    <Form.Label>Name</Form.Label>
+                    <Form.Control type="text" required onChange={(e) => setName(e.target.value)} />
+                </Form.Group>
+
+                {/* Email form SECTION  */}
                 <Form.Group className="mb-3" controlId="email">
                     <Form.Label>Email</Form.Label>
                     <Form.Control type="email" required onChange={(e) => setEmail(e.target.value)} />
                 </Form.Group>
 
+                {/* Password form SECTION */}
                 <Form.Group className="mb-3" controlId="password">
                     <Form.Label>Password</Form.Label>
                     <Form.Control type="password" required onChange={(e) => setPassword(e.target.value)} />
                 </Form.Group>
 
+                {/* Confirm Password form SECTION */}
+                <Form.Group className="mb-3" controlId="password">
+                    <Form.Label>Confirm Password</Form.Label>
+                    <Form.Control type="password" required onChange={(e) => setConfirmPassword(e.target.value)} />
+                </Form.Group>
+
                 <div>
-                    <Button type="submit">Sign in</Button>
+                    <Button type="submit">Sign Up</Button>
                 </div>
                 <div className="mb-3">
-                    New customer? {' '}
-                    <Link to={`/sign-up?redirect=${redirect}`}>Create your account</Link>
+                    Already have an account? {' '}
+                    <Link to={`/sigin?redirect=${redirect}`}>Sign-In</Link>
                 </div>
             </Form>
         </Container>
     )
 }
 
-export default SigninScreen
+export default SignUpSreen
