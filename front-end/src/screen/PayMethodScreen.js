@@ -10,16 +10,16 @@ const PayMethodScreen = () => {
     const navigate = useNavigate()
     const { state, dispatch: ctxDispatch } = useContext(Store);
     const {
-        cart: { shippingAdress, paymentMethod }
+        cart: { shippingAddress, paymentMethod }
     } = state;
 
     const [paymentMethodName, setPaymentMethod] = useState(paymentMethod || "PayPal")
 
     useEffect(() => {
-        if (!shippingAdress.address) {
+        if (!shippingAddress.address) {
             navigate('/shipping');
         }
-    }, [shippingAdress, navigate])
+    }, [shippingAddress, navigate])
 
 
     // to define to submit the paytment 

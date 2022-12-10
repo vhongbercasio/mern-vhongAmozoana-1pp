@@ -10,6 +10,7 @@ import ShippingAddressScreen from './screen/ShippingAddressScreen'
 import SignUpSreen from './screen/SignUpSreen';
 import PayMethodScreen from './screen/PayMethodScreen';
 import PlaceOrderScreen from "./screen/PlaceOrderScreen";
+import OrdeScreen from './screen/OrdeScreen'
 
 // import the some react-bootstrap
 import Navbar from 'react-bootstrap/Navbar';
@@ -27,13 +28,13 @@ import { LinkContainer } from 'react-router-bootstrap';
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { cart, userInfo } = state;
-  console.log(userInfo)
+
 
   const signoutHandler = () => {
     // reset all data from cartitem and userinfo
     ctxDispatch({ type: 'USER_SIGNOUT' });
     localStorage.removeItem('userInfo');
-    localStorage.removeItem('shippingAdress');
+    localStorage.removeItem('shippingAddress');
     localStorage.removeItem('paymentMethod')
 
   }
@@ -82,7 +83,7 @@ function App() {
         <main>
           <Container className="mt-3">
             <Routes>
-              {/* anchor tag in params slug components ProductScreen and route */}
+              {/* anchor tag in params slug components ProductScreen and route  with the params of slugId */}
               <Route path="/product/:slug" element={<ProductScreen />} />
 
               {/* list of products homeScreen components and route  */}
@@ -103,6 +104,8 @@ function App() {
               {/* PlaceOrderScreen components and route*/}
               <Route path="/placeorder-screen" element={<PlaceOrderScreen />} />
 
+              {/* OrderScreen components and route with the params of orderID */}
+              <Route path="/order/:id" element={<OrdeScreen />} />
               <Route path="/" element={<HomeScreen />} />
             </Routes>
           </Container>

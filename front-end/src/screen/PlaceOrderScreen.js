@@ -1,5 +1,6 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useReducer } from 'react';
 import CheckoutSteps from '../components/CheckoutSteps';
+import LoadingBox from '../components/LoadingBox'
 import { Helmet } from 'react-helmet-async';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
@@ -8,17 +9,40 @@ import Col from 'react-bootstrap/Col'
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { getError } from '../utils'
+import Axios from 'axios'
 
 
+//  as independent in component we define it the logic conmplex state 
+const reducer = (state, action) => {
+    switch (action.type) {
+        case 'CREATE_REQUEST':
+            return { ...state, loading: true };
+
+        case 'CREATE_SUCCESS':
+            return { ...state, loading: false };
+
+        case 'CREATE_FAIL':
+            return { ...state, loading: false };
+
+        default:
+            return state
+    }
+}
 const PlaceOrderScreen = () => {
     const navigate = useNavigate();
+    //independent this componnent 
+    const [{ loading }, dispatch] = useReducer(reducer, {
+        loading: false,
+
+    });
+
     const { state, dispatch: ctxDispatch } = useContext(Store);
-    //define the cart ot get ther object shiiping address 
+    //define the cart ot get ther object shiiping address for all total 
     const { cart, userInfo } = state;
 
-
     // logic for order summary or calculated all 
-
     const round2 = (num) => Math.round(num * 100 + Number.EPSILON) / 100; // to define the number in floating point ex. 123.2345 => 123.23
     cart.itemsPrice = round2(cart.cartItems.reduce((a, c) => a + c.quantity * c.price, 0));
     console.log(cart.itemsPrice);
@@ -32,17 +56,47 @@ const PlaceOrderScreen = () => {
 
 
 
-
-
-
     // define the placeOrderHandler
-    const placeOrderHandler = () => {
+    const placeOrderHandler = async () => {
+
+        try {
+            dispatch({ type: 'CREATE_REQUEST' })
+            const { data } = await Axios.post('/api/orders/',
+                {
+                    orderItems: cart.cartItems,
+                    shippingAddress: cart.shippingAddress,
+                    paymentMethod: cart.paymentMethod,
+                    shippingPrice: cart.shippingPrice,
+                    itemsPrice: cart.itemsPrice,
+                    taxPrice: cart.taxPrice,
+                    totalPrice: cart.totalPrice
+                },
+                {
+                    headers: {
+                        authorization: `Bearer ${userInfo.token}`
+                    }
+                },
+
+            );
+
+            ctxDispatch({ type: 'CART_CLEAR' })
+            dispatch({ type: 'CREATE_SUCCESS' });
+            localStorage.removeItem('cartItems');
+            navigate(`/order/${data.order._id}`);
+
+
+        } catch (error) {
+            dispatch({ type: 'CREATE_FAIL' });
+            toast.error(getError(error))
+            console.log("sdsadsa")
+        }
 
     }
 
     useEffect(() => {
         if (!cart.paymentMethod) {
-            navigate('/payment')
+            navigate('/payment');
+
         }
     }, [cart, navigate])
     return (
@@ -59,9 +113,9 @@ const PlaceOrderScreen = () => {
                         <Card.Body>
                             <Card.Title>Shipping</Card.Title>
                             <Card.Text>
-                                <strong>Name:</strong> {cart.shippingAdress.fullName} <br />
-                                <strong>Address:</strong> {cart.shippingAdress.address},
-                                {cart.shippingAdress.postalCode}, {cart.shippingAdress.country}
+                                <strong>Name:</strong> {cart.shippingAddress.fullName} <br />
+                                <strong>Address:</strong> {cart.shippingAddress.address}
+                                {cart.shippingAddress.postalCode} {cart.shippingAddress.country}
                             </Card.Text>
                             <Link to="/shipping">Edit</Link>
                         </Card.Body>
@@ -80,7 +134,7 @@ const PlaceOrderScreen = () => {
                             <Card.Title>Items</Card.Title>
                             <ListGroup variant="flush">
                                 {cart.cartItems.map((item) => (
-                                    <ListGroup.Item key={item.id || item}>
+                                    <ListGroup.Item key={item._id || item}>
                                         <Row className="align-items-center">
                                             <Col md={6}>
                                                 <img src={item.image} alt={item.name} className="img-fluid img-thumbnail" >
@@ -134,6 +188,7 @@ const PlaceOrderScreen = () => {
                                             Place Order
                                         </Button>
                                     </div>
+                                    {loading && <LoadingBox></LoadingBox>}
 
                                 </ListGroup.Item>
                             </ListGroup>

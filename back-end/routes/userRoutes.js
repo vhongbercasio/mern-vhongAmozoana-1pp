@@ -20,9 +20,9 @@ userRouter.post('/sign-in', expressAsyncHandler(async (req, res) => {
                 name: user.name,
                 email: user.email,
                 isAdmin: user.isAdmin,
-                tokee: generateToken(user)
+                token: generateToken(user)
             });
-            return
+            return 
         }
     } else {
         res.status(401).send({ message: 'lnvalid email or password' })
@@ -46,7 +46,7 @@ userRouter.post('/sign-up', expressAsyncHandler(async (req, res) => {
         name: user.name,
         email: user.email,
         isAdmin: user.isAdmin,
-        tokee: generateToken(user)
+        token: generateToken(user)
     });
     return
 }));

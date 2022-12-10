@@ -18,16 +18,16 @@ const ShippingAddressScreen = () => {
     // define the prev state in every state in shipping Adress  list for user
     const {
         userInfo,
-        cart: { shippingAdress }
+        cart: { shippingAddress }
     } = state;
 
     // define the context along the  reducer state
     // define the the list form of data
-    const [fullName, setFullName] = useState(shippingAdress.fullName || '')
-    const [address, setAdress] = useState(shippingAdress.address || '')
-    const [City, setCity] = useState(shippingAdress.City || '')
-    const [country, setCountry] = useState(shippingAdress.country || '')
-    const [postalCode, setPostalCode] = useState(shippingAdress.postalCode || '')
+    const [fullName, setFullName] = useState(shippingAddress.fullName || '')
+    const [address, setAdress] = useState(shippingAddress.address || '')
+    const [city, setCity] = useState(shippingAddress.city || '')
+    const [country, setCountry] = useState(shippingAddress.country || '')
+    const [postalCode, setPostalCode] = useState(shippingAddress.postalCode || '')
 
 
     // define to remove then data if ever the user is log out or the user is did not exist  must be remove it to secure tbe data 
@@ -44,16 +44,16 @@ const ShippingAddressScreen = () => {
             payload: {
                 fullName,
                 address,
-                City,
+                city,
                 postalCode,
                 country
 
             }
         });
-        localStorage.setItem('shippingAdress', JSON.stringify({
+        localStorage.setItem('shippingAddress', JSON.stringify({
             fullName,
             address,
-            City,
+            city,
             postalCode,
             country
         })
@@ -66,7 +66,7 @@ const ShippingAddressScreen = () => {
     return (
         <div>
             <Helmet>
-                <title>Shiping Address</title>
+                <title>Shipping Address</title>
             </Helmet>
             <CheckoutSteps steps1 steps2></CheckoutSteps>
             <div className="container small-container">
@@ -85,7 +85,7 @@ const ShippingAddressScreen = () => {
 
                     {/* full name Adress */}
                     <Form.Group className="mb-3" controlId="address">
-                        <Form.Label>Adress </Form.Label>
+                        <Form.Label>Address </Form.Label>
                         <Form.Control value={address}
                             onChange={(e) => setAdress(e.target.value)} >
                         </Form.Control>
@@ -94,7 +94,7 @@ const ShippingAddressScreen = () => {
                     {/* full name city*/}
                     <Form.Group className="mb-3" controlId="city" >
                         <Form.Label>City</Form.Label>
-                        <Form.Control value={City}
+                        <Form.Control value={city}
                             onChange={(e) => setCity(e.target.value)} >
                         </Form.Control>
                     </Form.Group>

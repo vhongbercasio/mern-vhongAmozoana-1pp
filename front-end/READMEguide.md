@@ -173,7 +173,16 @@ IMPLEMENT SELECT PAYMENT METHOFD SCREEN
 1.create input handle
 2.handle submit
 
-CREEAT PLACE ORDER Screen
+CREEAT PLACE ORDER SCREEN
 1.show cart items, paymeent address.
 2.handle place order action 
 3. create orsder create api 
+
+28. IMPLELMENT PLACE ORDER ACTION 
+1.handle place order action i
+1. creeate order create api 
+
+29.CREATE ORDER SCREEN 
+  1. create backend api for order/:id
+  2.fetch order api front end
+  3.show order information in 2 columns 

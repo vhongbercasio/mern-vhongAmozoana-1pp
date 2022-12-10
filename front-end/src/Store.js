@@ -13,12 +13,13 @@ const initialState = {
         // define the Payment method since we are use string
         paymentMethod: localStorage.getItem('paymentMethod') ? localStorage.getItem('paymentMethod') : '',
         // define the shippingAdress of oder in caritems in list
-        shippingAdress: localStorage.getItem('shippingAdress') ? JSON.parse(localStorage.getItem('shippingAdress')) : {},
+        shippingAddress: localStorage.getItem('shippingAddress') ? JSON.parse(localStorage.getItem('shippingAddress')) : {},
         // store in local storage in web and get of they exist cartdItems 
         cartItems: localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : []
     }
 
 }
+
 
 
 const reducer = (state, action) => {
@@ -47,9 +48,13 @@ const reducer = (state, action) => {
             return { ...state, cart: { ...state.cart, cartItems } }
         }
 
+        case 'CART_CLEAR':
+            return { ...state, cart: { ...state.cart, cartItems: [] } }
+
         case 'USER_SIGNIN':
             console.log(action.payload)
             return { ...state, userInfo: action.payload }
+
 
         case 'USER_SIGNOUT': {
             return {
@@ -57,17 +62,17 @@ const reducer = (state, action) => {
                 //  in  order to signout , about the cart items and userInfo will be remote in local storage or reset
                 cart: {
                     cartItems: [],
-                    shippingAdress: {},
+                    shippingAddress: {},
                     paymentMethod: " ",
-
                 }
             }
+
         }
 
         case 'SAVE_SHIPPING_ADDRESS':
             return {
                 ...state, cart: {
-                    ...state.cart, shippingAdress: action.payload
+                    ...state.cart, shippingAddress: action.payload
                 }
             }
 

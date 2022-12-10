@@ -8,6 +8,7 @@ import dotenv from 'dotenv';
 import seedRouter from './routes/seedRoutes.js'
 import productRouter from './routes/productRoutes.js'
 import userRouter from './routes/userRoutes.js'
+import orderRouter from './routes/orderRoutes.js'
 
 // MONGODB PLUGIN CONNECTIION
 dotenv.config()
@@ -26,9 +27,10 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 // ROUTER SECTION of API wiil uses for front end 
-app.use('/api/seed', seedRouter)
-app.use('/api/products', productRouter)
-app.use('/api/users', userRouter)
+app.use('/api/seed', seedRouter);
+app.use('/api/products', productRouter);
+app.use('/api/users', userRouter);
+app.use('/api/orders', orderRouter);
 
 
 
@@ -38,7 +40,8 @@ app.use('/api/users', userRouter)
 // this is middleware run if have error in routes ex: userRoute this will be execute 
 // this execute if the user log in is invalid
 app.use((error, req, res, next) => {
-    res.status(500).send({ message: err.message })
+
+    res.status(500).send({ message: error.message })
 })
 
 // define the port express,
@@ -49,7 +52,7 @@ app.listen(port, () => {
 
 });
 
-// API request [SECTION] retirv produc as defaul 
+// API request [SECTION] retirv produc as defaul
 // app.get('/api/products', (req, res) => {
 //     res.send(data.products)
 
@@ -67,7 +70,7 @@ app.listen(port, () => {
 
 // })
 
-// // API request [SECTION ] for individual id 
+// // API request [SECTION ] for individual id
 // app.get('/api/products/:id', (req, res) => {
 //     const product = data.products.find((x) => x._id === req.params.id);
 //     console.log(req.params)
