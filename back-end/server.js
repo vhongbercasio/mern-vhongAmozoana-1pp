@@ -33,6 +33,10 @@ app.use('/api/users', userRouter);
 app.use('/api/orders', orderRouter);
 
 
+// PAYPAL SECTION API
+app.get('/api/keys/paypal', (req, res) => {
+    res.send(process.env.PAYPAL_CLIENT_ID || 'sb'); // sb  dis stand for sand box
+})
 
 
 
@@ -40,7 +44,6 @@ app.use('/api/orders', orderRouter);
 // this is middleware run if have error in routes ex: userRoute this will be execute 
 // this execute if the user log in is invalid
 app.use((error, req, res, next) => {
-
     res.status(500).send({ message: error.message })
 })
 

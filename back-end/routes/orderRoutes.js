@@ -7,7 +7,7 @@ import { isAuth } from '../utils.js'
 
 const orderRouter = express.Router();
 
-
+//  craete  api order summmary
 orderRouter.post('/', isAuth, expressAsyncHandler(async (req, res) => {
     const newOrder = await new Order({
         orderItems: req.body.orderItems.map((x) => ({ ...x, product: x._id })),
@@ -27,8 +27,7 @@ orderRouter.post('/', isAuth, expressAsyncHandler(async (req, res) => {
 }))
 
 
-
-
+// define the the order Id with the authentication of user where as allow to buy
 orderRouter.get('/:id', isAuth, expressAsyncHandler(async (req, res) => {
     const order = await Order.findById(req.params.id);
     console.log(order)
@@ -38,6 +37,27 @@ orderRouter.get('/:id', isAuth, expressAsyncHandler(async (req, res) => {
         res.status(404).send({ message: 'Order not found' })
     }
 
+}))
+
+
+// define  the thr paymnet order 
+orderRouter.put('/:id/pay', isAuth, expressAsyncHandler(async (req, res) => {
+    const order = await Order.findById(req.params.id);
+    if (order) {
+        order.isPaid = true;
+        order.paidAt = Date.Now();
+        order.paymentResult = {
+            id: req.body.id,
+            status: req.body.status,
+            update_time: req.body.update_time,
+            email_address: req.body.email_address,
+        };
+        const updateOrder = await order.save();
+        // send to front end 
+        res.send({ message: 'Order is Paid', order: updateOrder });
+    } else {
+        res.status(404).send({ message: 'Order Not Found' })
+    }
 }))
 
 

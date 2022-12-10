@@ -185,4 +185,16 @@ CREEAT PLACE ORDER SCREEN
 29.CREATE ORDER SCREEN 
   1. create backend api for order/:id
   2.fetch order api front end
-  3.show order information in 2 columns 
+  3.show order information in 2 columns
+  
+30. PAY ORDER BY PAYPAL
+1.generate paypal client id 
+2. create api to return client id 
+3. install react-paypal-js
+4.. use payaplScriptProvider in order Screen 
+5. use usePaypalScript in order Screnn 
+6. implement loadPaypalScript function
+7. render paypal button
+8.implement opApprove payment function
+9.create pay order api in backend
+

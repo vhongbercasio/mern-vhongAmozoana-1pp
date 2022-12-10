@@ -55,7 +55,6 @@ const reducer = (state, action) => {
             console.log(action.payload)
             return { ...state, userInfo: action.payload }
 
-
         case 'USER_SIGNOUT': {
             return {
                 ...state, userInfo: null,
