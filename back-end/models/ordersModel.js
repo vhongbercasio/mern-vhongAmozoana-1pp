@@ -40,6 +40,7 @@ const orderSchema = new mongoose.Schema(
         taxPrice: { type: Number, required: true },
         totalPrice: { type: Number, required: true },
         user: {
+            // this model document is reference with the User UserModel with the getting the unique Id
             type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true
         },
         isPaid: { type: Boolean, default: false },

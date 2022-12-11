@@ -27,7 +27,17 @@ orderRouter.post('/', isAuth, expressAsyncHandler(async (req, res) => {
 }))
 
 
-// define the the order Id with the authentication of user where as allow to buy
+
+
+// defiene the mine order API
+orderRouter.get('/mine', isAuth, expressAsyncHandler(async (req, res) => {
+    const orders = await Order.find({ user: req.user._id });
+    res.send(orders);
+}))
+
+
+
+// define the the order Id API with the authentication of user where as allow to buy
 orderRouter.get('/:id', isAuth, expressAsyncHandler(async (req, res) => {
     const order = await Order.findById(req.params.id);
     console.log(order)
@@ -40,7 +50,7 @@ orderRouter.get('/:id', isAuth, expressAsyncHandler(async (req, res) => {
 }))
 
 
-// define  the thr paymnet order 
+// define  the the API paymnet order 
 orderRouter.put('/:id/pay', isAuth, expressAsyncHandler(async (req, res) => {
     const order = await Order.findById(req.params.id);
     if (order) {
@@ -59,6 +69,9 @@ orderRouter.put('/:id/pay', isAuth, expressAsyncHandler(async (req, res) => {
         res.status(404).send({ message: 'Order Not Found' })
     }
 }))
+
+
+
 
 
 export default orderRouter;
