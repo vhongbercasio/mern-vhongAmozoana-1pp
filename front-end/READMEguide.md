@@ -203,3 +203,10 @@ CREEAT PLACE ORDER SCREEN
   1.create order screen
   2.create order history api
   3.use api in the front-end
+  
+33.CREATE PROFILE SCREEN  
+ 1.get user info from context
+ 2.show user information
+ 3.crearete user update ApI
+ 4.update user info
+  

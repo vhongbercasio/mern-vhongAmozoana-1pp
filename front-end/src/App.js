@@ -12,6 +12,7 @@ import PayMethodScreen from './screen/PayMethodScreen';
 import PlaceOrderScreen from "./screen/PlaceOrderScreen";
 import OrdeScreen from './screen/OrdeScreen'
 import OrderHistoryScreen from './screen/OrderHistoryScreen'
+import ProfileScreen from './screen/ProfileScreen'
 
 // import the some react-bootstrap
 import Navbar from 'react-bootstrap/Navbar';
@@ -36,7 +37,9 @@ function App() {
     ctxDispatch({ type: 'USER_SIGNOUT' });
     localStorage.removeItem('userInfo');
     localStorage.removeItem('shippingAddress');
-    localStorage.removeItem('paymentMethod')
+    localStorage.removeItem('paymentMethod');
+    // if the user is update there informairion and keep signout
+    window.location.href = '/signin'
 
   }
 
@@ -99,6 +102,9 @@ function App() {
               {/* Sign up components and routes  */}
               <Route path="/sign-up" element={<SignUpSreen />} />
 
+              {/* Profile components and routes  */}
+              <Route path="/profile" element={<ProfileScreen />} />
+
               {/* ShippingaddressScreen components and route*/}
               <Route path="/shipping" element={< ShippingAddressScreen />} />
 
@@ -113,6 +119,8 @@ function App() {
 
               {/*OrderHistoryScreen components and route with comes of order*/}
               <Route path="/orderhistory" element={<OrderHistoryScreen />} />
+
+
               <Route path="/" element={<HomeScreen />} />
             </Routes>
           </Container>
